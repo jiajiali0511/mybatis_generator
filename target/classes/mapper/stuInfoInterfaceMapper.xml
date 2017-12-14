@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pro.sankuai.dao.StuInfoInterface">
+    <sql id="COLUMN_FIELD">
+        id AS id,
+        stu_name AS stuName,
+        stu_age AS stuAge,
+        valid AS valid,
+        ctime AS ctime,
+        utime AS utime
+    </sql>
+
+    <insert id="insertOneStuInfo" parameterType="StuInfo">
+        INSERT INTO stu_info
+        (
+        stu_name,
+        stu_age,
+        valid,
+        ctime,
+        utime
+        )
+        VALUE
+        (
+        #{stuName},
+        #{stuAge},
+        #{valid},
+        #{ctime},
+        #{utime}
+        )
+    </insert>
+
+    <insert id="batchInsertStuInfo" parameterType="java.util.List">
+        INSERT INTO stu_info
+        (
+        stu_name,
+        stu_age,
+        valid,
+        ctime,
+        utime
+        )
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.stuName},
+            #{item.stuAge},
+            #{item.valid},
+            #{item.ctime},
+            #{item.utime}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectStuInfoById" parameterType="int" resultType="StuInfo">
+        select
+        <include refid="COLUMN_FIELD"/>
+        FROM stu_info
+        WHERE id = #{id};
+    </select>
+
+    <select id="selectStuInfoByCondition" parameterType="java.util.Map" resultType="StuInfo">
+        SELECT
+        <include refid="COLUMN_FIELD"/>
+        FROM stu_info
+        <where>
+            <if test="stuAge != null">
+                AND stu_age = #{stuAge}
+            </if>
+            <if test="valid != null and valid != ''">
+                AND valid = #{valid}
+            </if>
+        </where>
+        limit #{offset}, #{limit};
+    </select>
+</mapper>
