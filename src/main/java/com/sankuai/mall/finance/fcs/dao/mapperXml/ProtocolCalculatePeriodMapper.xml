@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sankuai.mall.finance.fcs.dao.mapper.ProtocolCalculatePeriodMapper" >
+  <resultMap id="BaseResultMap" type="com.sankuai.mall.finance.fcs.dao.po.ProtocolCalculatePeriod" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="protocol_id" property="protocolId" jdbcType="BIGINT" />
+    <result column="rule_id" property="ruleId" jdbcType="BIGINT" />
+    <result column="start_time" property="startTime" jdbcType="BIGINT" />
+    <result column="end_time" property="endTime" jdbcType="BIGINT" />
+    <result column="calculate_status" property="calculateStatus" jdbcType="INTEGER" />
+    <result column="calculate_time" property="calculateTime" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="valid" property="valid" jdbcType="INTEGER" />
+    <result column="actual_calculate_time" property="actualCalculateTime" jdbcType="BIGINT" />
+    <result column="statistic_time" property="statisticTime" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, protocol_id, rule_id, start_time, end_time, calculate_status, calculate_time, 
+    create_time, update_time, create_by, update_by, valid, actual_calculate_time, statistic_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sankuai.mall.finance.fcs.dao.po.ProtocolCalculatePeriodCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from protocol_calculate_period
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from protocol_calculate_period
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from protocol_calculate_period
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sankuai.mall.finance.fcs.dao.po.ProtocolCalculatePeriodCriteria" >
+    delete from protocol_calculate_period
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sankuai.mall.finance.fcs.dao.po.ProtocolCalculatePeriod" >
+    insert into protocol_calculate_period (id, protocol_id, rule_id, 
+      start_time, end_time, calculate_status, 
+      calculate_time, create_time, update_time, 
+      create_by, update_by, valid, 
+      actual_calculate_time, statistic_time)
+    values (#{id,jdbcType=BIGINT}, #{protocolId,jdbcType=BIGINT}, #{ruleId,jdbcType=BIGINT}, 
+      #{startTime,jdbcType=BIGINT}, #{endTime,jdbcType=BIGINT}, #{calculateStatus,jdbcType=INTEGER}, 
+      #{calculateTime,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, 
+      #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{valid,jdbcType=INTEGER}, 
+      #{actualCalculateTime,jdbcType=BIGINT}, #{statisticTime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sankuai.mall.finance.fcs.dao.po.ProtocolCalculatePeriod" >
+    insert into protocol_calculate_period
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="protocolId != null" >
+        protocol_id,
+      </if>
+      <if test="ruleId != null" >
+        rule_id,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="calculateStatus != null" >
+        calculate_status,
+      </if>
+      <if test="calculateTime != null" >
+        calculate_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="valid != null" >
+        valid,
+      </if>
+      <if test="actualCalculateTime != null" >
+        actual_calculate_time,
+      </if>
+      <if test="statisticTime != null" >
+        statistic_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="protocolId != null" >
+        #{protocolId,jdbcType=BIGINT},
+      </if>
+      <if test="ruleId != null" >
+        #{ruleId,jdbcType=BIGINT},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=BIGINT},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=BIGINT},
+      </if>
+      <if test="calculateStatus != null" >
+        #{calculateStatus,jdbcType=INTEGER},
+      </if>
+      <if test="calculateTime != null" >
+        #{calculateTime,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null" >
+        #{valid,jdbcType=INTEGER},
+      </if>
+      <if test="actualCalculateTime != null" >
+        #{actualCalculateTime,jdbcType=BIGINT},
+      </if>
+      <if test="statisticTime != null" >
+        #{statisticTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sankuai.mall.finance.fcs.dao.po.ProtocolCalculatePeriodCriteria" resultType="java.lang.Integer" >
+    select count(*) from protocol_calculate_period
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update protocol_calculate_period
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.protocolId != null" >
+        protocol_id = #{record.protocolId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ruleId != null" >
+        rule_id = #{record.ruleId,jdbcType=BIGINT},
+      </if>
+      <if test="record.startTime != null" >
+        start_time = #{record.startTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.endTime != null" >
+        end_time = #{record.endTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.calculateStatus != null" >
+        calculate_status = #{record.calculateStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.calculateTime != null" >
+        calculate_time = #{record.calculateTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.createBy != null" >
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateBy != null" >
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.valid != null" >
+        valid = #{record.valid,jdbcType=INTEGER},
+      </if>
+      <if test="record.actualCalculateTime != null" >
+        actual_calculate_time = #{record.actualCalculateTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.statisticTime != null" >
+        statistic_time = #{record.statisticTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update protocol_calculate_period
+    set id = #{record.id,jdbcType=BIGINT},
+      protocol_id = #{record.protocolId,jdbcType=BIGINT},
+      rule_id = #{record.ruleId,jdbcType=BIGINT},
+      start_time = #{record.startTime,jdbcType=BIGINT},
+      end_time = #{record.endTime,jdbcType=BIGINT},
+      calculate_status = #{record.calculateStatus,jdbcType=INTEGER},
+      calculate_time = #{record.calculateTime,jdbcType=BIGINT},
+      create_time = #{record.createTime,jdbcType=BIGINT},
+      update_time = #{record.updateTime,jdbcType=BIGINT},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      valid = #{record.valid,jdbcType=INTEGER},
+      actual_calculate_time = #{record.actualCalculateTime,jdbcType=BIGINT},
+      statistic_time = #{record.statisticTime,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sankuai.mall.finance.fcs.dao.po.ProtocolCalculatePeriod" >
+    update protocol_calculate_period
+    <set >
+      <if test="protocolId != null" >
+        protocol_id = #{protocolId,jdbcType=BIGINT},
+      </if>
+      <if test="ruleId != null" >
+        rule_id = #{ruleId,jdbcType=BIGINT},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=BIGINT},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=BIGINT},
+      </if>
+      <if test="calculateStatus != null" >
+        calculate_status = #{calculateStatus,jdbcType=INTEGER},
+      </if>
+      <if test="calculateTime != null" >
+        calculate_time = #{calculateTime,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null" >
+        valid = #{valid,jdbcType=INTEGER},
+      </if>
+      <if test="actualCalculateTime != null" >
+        actual_calculate_time = #{actualCalculateTime,jdbcType=BIGINT},
+      </if>
+      <if test="statisticTime != null" >
+        statistic_time = #{statisticTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sankuai.mall.finance.fcs.dao.po.ProtocolCalculatePeriod" >
+    update protocol_calculate_period
+    set protocol_id = #{protocolId,jdbcType=BIGINT},
+      rule_id = #{ruleId,jdbcType=BIGINT},
+      start_time = #{startTime,jdbcType=BIGINT},
+      end_time = #{endTime,jdbcType=BIGINT},
+      calculate_status = #{calculateStatus,jdbcType=INTEGER},
+      calculate_time = #{calculateTime,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      valid = #{valid,jdbcType=INTEGER},
+      actual_calculate_time = #{actualCalculateTime,jdbcType=BIGINT},
+      statistic_time = #{statisticTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

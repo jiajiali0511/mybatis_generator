@@ -1,0 +1,10 @@
+#IDEA
+**/.idea/
+**/*.iml
+**/.DS_Store
+
+#Compile folder
+**/target/
+
+#log output
+**/logs/
